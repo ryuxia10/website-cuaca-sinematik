@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "./App.css";
-import wilayahData from "./wilayah-data.json"; // Menggunakan file data lokal kita yang baru
+// Pastikan nama file ini sesuai dengan file JSON yang sudah saya rapikan untuk Anda
+import wilayahData from "./wilayah-indonesia.json";
 
 // Aset visual tidak berubah
 const weatherAssets = {
@@ -22,11 +23,53 @@ const weatherAssets = {
     sound: null,
     color: "#B0BEC5",
   },
+  "Berawan Tebal": {
+    video: "/videos/video-berangin.mp4",
+    icon: "/icons/icon-berawan.png",
+    sound: null,
+    color: "#78909C",
+  },
+  "Udara Kabur": {
+    video: "/videos/video-kabut.mp4",
+    icon: "/icons/icon-kabut.png",
+    sound: null,
+    color: "#78909C",
+  },
+  Kabut: {
+    video: "/videos/video-kabut.mp4",
+    icon: "/icons/icon-kabut.png",
+    sound: null,
+    color: "#78909C",
+  },
+  Asap: {
+    video: "/videos/video-kabut.mp4",
+    icon: "/icons/icon-kabut.png",
+    sound: null,
+    color: "#78909C",
+  },
   "Hujan Ringan": {
     video: "/videos/video-hujan-ringan.mp4",
     icon: "/icons/icon-hujan.png",
     sound: "/sounds/suara-hujan.mp3",
     color: "#4DD0E1",
+  },
+  "Hujan Sedang": {
+    video: "/videos/video-hujan-ringan.mp4",
+    icon: "/icons/icon-hujan.png",
+    sound: "/sounds/suara-hujan.mp3",
+    color: "#4DD0E1",
+  },
+  "Hujan Lokal": {
+    video: "/videos/video-hujan-ringan.mp4",
+    icon: "/icons/icon-hujan.png",
+    sound: "/sounds/suara-hujan.mp3",
+    color: "#4DD0E1",
+  },
+  "Hujan Lebat": {
+    video: "/videos/video-hujan-badai.mp4",
+    icon: "/icons/icon-hujan-petir.png",
+    sound: "/sounds/suara-badai.mp3",
+    color: "#29B6F6",
   },
   "Hujan Petir": {
     video: "/videos/video-hujan-badai.mp4",
@@ -42,28 +85,37 @@ const weatherAssets = {
   },
 };
 
-// Data cuaca "dummy" sebagai pengganti panggilan API yang gagal
-const dummyWeatherData = {
-  weather_desc: "Cerah Berawan",
-  t: "28", // suhu
-  hu: "75", // kelembapan
-  ws: "10", // kecepatan angin
-};
-
 function App() {
-  const [currentLocation, setCurrentLocation] = useState(null);
+  const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // useEffect sekarang hanya bertugas menetapkan lokasi awal, tanpa fetch
-  useEffect(() => {
-    // Set lokasi default ke Bandung saat pertama kali load
-    const defaultLocation = wilayahData.find(
-      (loc) => loc.kota === "KOTA BANDUNG"
-    );
-    setCurrentLocation(defaultLocation);
-    setLoading(false);
+  const fetchWeatherData = useCallback(async (kodeWilayah) => {
+    if (!kodeWilayah) return;
+    setLoading(true);
+
+    // INI BAGIAN YANG ANDA CARI: Memanggil "kurir" di Vercel
+    const API_URL = `/api/getWeather?kode=${kodeWilayah}`;
+
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok) {
+        throw new Error("Gagal mengambil data dari kurir Vercel.");
+      }
+      const data = await response.json();
+      setWeatherData(data);
+    } catch (error) {
+      console.error("Error fetching weather data:", error);
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
   }, []);
+
+  useEffect(() => {
+    // Kode default untuk Kota Bandung saat pertama kali memuat
+    fetchWeatherData("32.73");
+  }, [fetchWeatherData]);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -72,7 +124,7 @@ function App() {
     const lowerCaseSearchTerm = searchTerm.toLowerCase();
     let foundLocation = null;
 
-    // Logika pencarian yang lebih pintar
+    // Logika Pencarian: Cari nama kota dulu, baru kecamatan
     foundLocation = wilayahData.find(
       (loc) => loc.kota.toLowerCase() === lowerCaseSearchTerm
     );
@@ -84,14 +136,16 @@ function App() {
     }
 
     if (foundLocation) {
-      setCurrentLocation(foundLocation);
+      fetchWeatherData(foundLocation.kode);
     } else {
       alert(`Lokasi "${searchTerm}" tidak ditemukan di dalam data.`);
     }
   };
 
-  // Logika pembacaan data sekarang menggunakan data dummy
-  const weatherDescription = dummyWeatherData.weather_desc;
+  // Logika Pembacaan Data yang Aman
+  const locationInfo = weatherData?.lokasi;
+  const currentForecast = weatherData?.data?.[0]?.cuaca?.[0] || {}; // Default ke objek kosong
+  const weatherDescription = currentForecast.weather_desc || "Berawan";
   const assets = weatherAssets[weatherDescription] || weatherAssets["Default"];
 
   return (
@@ -127,16 +181,16 @@ function App() {
         </form>
 
         {loading ? (
-          <div className="loading-text">Memuat...</div>
-        ) : !currentLocation ? (
-          <div className="loading-text">Pilih lokasi.</div>
+          <div className="loading-text">Memuat Kanvas Cuaca...</div>
+        ) : !weatherData || !currentForecast ? (
+          <div className="loading-text">
+            Data tidak tersedia. Coba cari lokasi lain.
+          </div>
         ) : (
           <div className="weather-content-container">
             <div className="location-info">
-              <h1>{currentLocation.kecamatan}</h1>
-              <p>
-                {currentLocation.kota}, {currentLocation.propinsi}
-              </p>
+              <h1>{locationInfo?.kecamatan || "Lokasi"}</h1>
+              <p>{locationInfo?.kotkab || "Tidak Ditemukan"}</p>
             </div>
             <div className="weather-display">
               <img
@@ -146,13 +200,15 @@ function App() {
                 key={assets.icon}
               />
               <div className="weather-details">
-                <h2 style={{ color: assets.color }}>{dummyWeatherData.t}°C</h2>
+                <h2 style={{ color: assets.color }}>
+                  {currentForecast.t || "--"}°C
+                </h2>
                 <p style={{ color: assets.color }}>{weatherDescription}</p>
               </div>
             </div>
             <div className="extra-info">
-              <p>Kelembapan: {dummyWeatherData.hu}%</p>
-              <p>Angin: {dummyWeatherData.ws} km/j</p>
+              <p>Kelembapan: {currentForecast.hu || "--"}%</p>
+              <p>Angin: {currentForecast.ws || "--"} km/j</p>
             </div>
           </div>
         )}

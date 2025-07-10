@@ -1,0 +1,66 @@
+[
+  {
+    "id": "501320",
+    "propinsi": "DKI Jakarta",
+    "kota": "Jakarta Pusat",
+    "kecamatan": "Gambir",
+    "lat": "-6.175392",
+    "lon": "106.827153"
+  },
+  {
+    "id": "501214",
+    "propinsi": "Jawa Barat",
+    "kota": "Bandung",
+    "kecamatan": "Bandung",
+    "lat": "-6.914744",
+    "lon": "107.609810"
+  },
+  {
+    "id": "501283",
+    "propinsi": "Jawa Timur",
+    "kota": "Surabaya",
+    "kecamatan": "Surabaya",
+    "lat": "-7.257472",
+    "lon": "112.752090"
+  },
+  {
+    "id": "501187",
+    "propinsi": "DI Yogyakarta",
+    "kota": "Yogyakarta",
+    "kecamatan": "Yogyakarta",
+    "lat": "-7.795580",
+    "lon": "110.369492"
+  },
+  {
+    "id": "501340",
+    "propinsi": "Jawa Tengah",
+    "kota": "Semarang",
+    "kecamatan": "Semarang",
+    "lat": "-6.966667",
+    "lon": "110.416664"
+  },
+  {
+    "id": "501306",
+    "propinsi": "Bali",
+    "kota": "Denpasar",
+    "kecamatan": "Denpasar",
+    "lat": "-8.650000",
+    "lon": "115.216667"
+  },
+  {
+    "id": "500463",
+    "propinsi": "Sumatera Utara",
+    "kota": "Medan",
+    "kecamatan": "Medan",
+    "lat": "3.595196",
+    "lon": "98.672226"
+  },
+  {
+    "id": "501469",
+    "propinsi": "Sulawesi Selatan",
+    "kota": "Makassar",
+    "kecamatan": "Makassar",
+    "lat": "-5.147665",
+    "lon": "119.432732"
+  }
+]

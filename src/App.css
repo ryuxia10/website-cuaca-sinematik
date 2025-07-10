@@ -1,38 +1,198 @@
+/* --- Import Font dari Google Fonts --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&family=Roboto:wght@400;500&display=swap');
+
+/* --- Reset Dasar & Body --- */
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif; /* Font default untuk teks */
+  background-color: #000;
+  color: #FFFFFF;
+  overflow: hidden; /* Mencegah scrollbar yang tidak perlu */
+}
+
 .App {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* --- Tampilan Loading --- */
+.loading-screen {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2em;
+  color: #fff;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+
+/* --- Video Background & Overlay --- */
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Memastikan video menutupi seluruh layar */
+  z-index: 1;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* Lapisan gelap transparan */
+  z-index: 2;
+}
+
+/* --- Konten Utama --- */
+.content {
+  position: relative;
+  z-index: 3;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* Efek Kaca Buram (Frosted Glass) - opsional tapi keren */
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  width: 90%;
+  max-width: 600px;
+}
+
+/* --- Styling Teks --- */
+.location-info h1 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 3.5em;
+  margin: 0;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.location-info p {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.2em;
+  margin: 5px 0 30px 0;
+  opacity: 0.9;
+}
+
+/* --- Tampilan Cuaca Utama --- */
+.weather-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.weather-icon {
+  width: 120px;
+  height: 120px;
+  /* Animasi halus saat ikon muncul */
+  animation: pop-in 0.5s ease-out;
+}
+
+.weather-details h2 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 5em;
+  margin: 0;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+  transition: color 0.5s ease; /* Transisi warna yang mulus */
+}
+
+.weather-details p {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 1.5em;
+  margin: 0;
+  text-transform: capitalize;
+  transition: color 0.5s ease;
+  opacity: 0.9;
+}
+
+/* --- Informasi Tambahan --- */
+.extra-info {
+  display: flex;
+  gap: 30px;
+  font-size: 1em;
+  opacity: 0.8;
+}
+
+/* --- Animasi --- */
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
+/* --- Styling untuk Form Pencarian --- */
+.search-form {
+  display: flex;
+  margin-bottom: 40px; /* Jarak dari form ke konten cuaca */
+  width: 100%;
+  max-width: 500px;
+}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.search-input {
+  flex-grow: 1; /* Input memanjang mengisi ruang */
+  padding: 15px 20px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.1em;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px 0 0 10px; /* Sudut kiri melengkung */
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+.search-input:focus {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.search-button {
+  padding: 15px 25px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 0 10px 10px 0; /* Sudut kanan melengkung */
+  background-color: #9C27B0; /* Warna ungu elektrik yang keren */
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #7B1FA2;
+}
+
+/* Penyesuaian kecil */
+.weather-content-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  animation: pop-in 0.5s ease-out; /* Animasi pop-in kita gunakan lagi */
+}
+
+.loading-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.5em;
+  min-height: 300px; /* Beri ruang agar layout tidak loncat */
+  display: flex;
+  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

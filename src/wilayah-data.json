@@ -1,0 +1,542 @@
+[
+  {
+    "kode": "11.01",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH SELATAN",
+    "kecamatan": "ACEH SELATAN"
+  },
+  {
+    "kode": "11.01.01",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH SELATAN",
+    "kecamatan": "Bakongan"
+  },
+  {
+    "kode": "11.01.02",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH SELATAN",
+    "kecamatan": "Kluet Utara"
+  },
+  {
+    "kode": "11.01.03",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH SELATAN",
+    "kecamatan": "Kluet Selatan"
+  },
+  {
+    "kode": "11.01.04",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH SELATAN",
+    "kecamatan": "Labuhan Haji"
+  },
+  {
+    "kode": "11.01.05",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH SELATAN",
+    "kecamatan": "Meukek"
+  },
+  {
+    "kode": "11.01.06",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH SELATAN",
+    "kecamatan": "Samadua"
+  },
+  {
+    "kode": "11.01.07",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH SELATAN",
+    "kecamatan": "Sawang"
+  },
+  {
+    "kode": "11.01.08",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH SELATAN",
+    "kecamatan": "Tapaktuan"
+  },
+  {
+    "kode": "11.01.09",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH SELATAN",
+    "kecamatan": "Trumon"
+  },
+  {
+    "kode": "11.01.10",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH SELATAN",
+    "kecamatan": "Pasi Raja"
+  },
+  {
+    "kode": "11.01.11",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH SELATAN",
+    "kecamatan": "Labuhan Haji Timur"
+  },
+  {
+    "kode": "11.01.12",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH SELATAN",
+    "kecamatan": "Labuhan Haji Barat"
+  },
+  {
+    "kode": "11.01.13",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH SELATAN",
+    "kecamatan": "Kluet Tengah"
+  },
+  {
+    "kode": "11.01.14",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH SELATAN",
+    "kecamatan": "Kluet Timur"
+  },
+  {
+    "kode": "11.01.15",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH SELATAN",
+    "kecamatan": "Bakongan Timur"
+  },
+  {
+    "kode": "11.01.16",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH SELATAN",
+    "kecamatan": "Trumon Timur"
+  },
+  {
+    "kode": "11.01.17",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH SELATAN",
+    "kecamatan": "Kota Bahagia"
+  },
+  {
+    "kode": "11.01.18",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH SELATAN",
+    "kecamatan": "Trumon Tengah"
+  },
+  {
+    "kode": "11.02",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGGARA",
+    "kecamatan": "ACEH TENGGARA"
+  },
+  {
+    "kode": "11.02.01",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGGARA",
+    "kecamatan": "Lawe Alas"
+  },
+  {
+    "kode": "11.02.02",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGGARA",
+    "kecamatan": "Lawe Sigala-Gala"
+  },
+  {
+    "kode": "11.02.03",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGGARA",
+    "kecamatan": "Bambel"
+  },
+  {
+    "kode": "11.02.04",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGGARA",
+    "kecamatan": "Babussalam"
+  },
+  {
+    "kode": "11.02.05",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGGARA",
+    "kecamatan": "Badar"
+  },
+  {
+    "kode": "11.02.06",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGGARA",
+    "kecamatan": "Babul Makmur"
+  },
+  {
+    "kode": "11.02.07",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGGARA",
+    "kecamatan": "Darul Hasanah"
+  },
+  {
+    "kode": "11.02.08",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGGARA",
+    "kecamatan": "Lawe Bulan"
+  },
+  {
+    "kode": "11.02.09",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGGARA",
+    "kecamatan": "Bukit Tusam"
+  },
+  {
+    "kode": "11.02.10",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGGARA",
+    "kecamatan": "Semadam"
+  },
+  {
+    "kode": "11.02.11",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGGARA",
+    "kecamatan": "Babul Rahmah"
+  },
+  {
+    "kode": "11.02.12",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGGARA",
+    "kecamatan": "Ketambe"
+  },
+  {
+    "kode": "11.02.13",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGGARA",
+    "kecamatan": "Deleng Pokhkisen"
+  },
+  {
+    "kode": "11.02.14",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGGARA",
+    "kecamatan": "Lawe Sumur"
+  },
+  {
+    "kode": "11.02.15",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGGARA",
+    "kecamatan": "Tanoh Alas"
+  },
+  {
+    "kode": "11.02.16",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGGARA",
+    "kecamatan": "Leuser"
+  },
+  {
+    "kode": "11.03",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "ACEH TIMUR"
+  },
+  {
+    "kode": "11.03.01",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Darul Aman"
+  },
+  {
+    "kode": "11.03.02",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Julok"
+  },
+  {
+    "kode": "11.03.03",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Idi Rayeuk"
+  },
+  {
+    "kode": "11.03.04",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Birem Bayeun"
+  },
+  {
+    "kode": "11.03.05",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Serbajadi"
+  },
+  {
+    "kode": "11.03.06",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Nurussalam"
+  },
+  {
+    "kode": "11.03.07",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Peureulak"
+  },
+  {
+    "kode": "11.03.08",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Rantau Selamat"
+  },
+  {
+    "kode": "11.03.09",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Simpang Ulim"
+  },
+  {
+    "kode": "11.03.10",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Rantau Peureulak"
+  },
+  {
+    "kode": "11.03.11",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Pante Bidari"
+  },
+  {
+    "kode": "11.03.12",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Madat"
+  },
+  {
+    "kode": "11.03.13",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Indra Makmu"
+  },
+  {
+    "kode": "11.03.14",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Idi Tunong"
+  },
+  {
+    "kode": "11.03.15",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Banda Alam"
+  },
+  {
+    "kode": "11.03.16",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Peudawa"
+  },
+  {
+    "kode": "11.03.17",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Peureulak Timur"
+  },
+  {
+    "kode": "11.03.18",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Peureulak Barat"
+  },
+  {
+    "kode": "11.03.19",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Sungai Raya"
+  },
+  {
+    "kode": "11.03.20",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Simpang Jernih"
+  },
+  {
+    "kode": "11.03.21",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Darul Ihsan"
+  },
+  {
+    "kode": "11.03.22",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Darul Falah"
+  },
+  {
+    "kode": "11.03.23",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Idi Timur"
+  },
+  {
+    "kode": "11.03.24",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TIMUR",
+    "kecamatan": "Peunaron"
+  },
+  {
+    "kode": "11.04",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGAH",
+    "kecamatan": "ACEH TENGAH"
+  },
+  {
+    "kode": "11.04.01",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGAH",
+    "kecamatan": "Linge"
+  },
+  {
+    "kode": "11.04.02",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGAH",
+    "kecamatan": "Silih Nara"
+  },
+  {
+    "kode": "11.04.03",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGAH",
+    "kecamatan": "Bebesen"
+  },
+  {
+    "kode": "11.04.07",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGAH",
+    "kecamatan": "Pegasing"
+  },
+  {
+    "kode": "11.04.08",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGAH",
+    "kecamatan": "Bintang"
+  },
+  {
+    "kode": "11.04.10",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGAH",
+    "kecamatan": "Ketol"
+  },
+  {
+    "kode": "11.04.11",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGAH",
+    "kecamatan": "Kebayakan"
+  },
+  {
+    "kode": "11.04.12",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGAH",
+    "kecamatan": "Kute Panang"
+  },
+  {
+    "kode": "11.04.13",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGAH",
+    "kecamatan": "Celala"
+  },
+  {
+    "kode": "11.04.17",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGAH",
+    "kecamatan": "Laut Tawar"
+  },
+  {
+    "kode": "11.04.18",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGAH",
+    "kecamatan": "Atu Lintang"
+  },
+  {
+    "kode": "11.04.19",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGAH",
+    "kecamatan": "Jagong Jeget"
+  },
+  {
+    "kode": "11.04.20",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGAH",
+    "kecamatan": "Bies"
+  },
+  {
+    "kode": "11.04.21",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH TENGAH",
+    "kecamatan": "Rusip Antara"
+  },
+  {
+    "kode": "11.05",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH BARAT",
+    "kecamatan": "ACEH BARAT"
+  },
+  {
+    "kode": "11.05.01",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH BARAT",
+    "kecamatan": "Johan Pahlawan"
+  },
+  {
+    "kode": "11.05.02",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH BARAT",
+    "kecamatan": "Kaway XVI"
+  },
+  {
+    "kode": "11.05.03",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH BARAT",
+    "kecamatan": "Sungai Mas"
+  },
+  {
+    "kode": "11.05.04",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH BARAT",
+    "kecamatan": "Woyla"
+  },
+  {
+    "kode": "11.05.05",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH BARAT",
+    "kecamatan": "Samatiga"
+  },
+  {
+    "kode": "11.05.06",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH BARAT",
+    "kecamatan": "Bubon"
+  },
+  {
+    "kode": "11.05.07",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH BARAT",
+    "kecamatan": "Arongan Lambalek"
+  },
+  {
+    "kode": "11.05.08",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH BARAT",
+    "kecamatan": "Pante Ceureumen"
+  },
+  {
+    "kode": "11.05.09",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH BARAT",
+    "kecamatan": "Meureubo"
+  },
+  {
+    "kode": "11.05.10",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH BARAT",
+    "kecamatan": "Woyla Barat"
+  },
+  {
+    "kode": "11.05.11",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH BARAT",
+    "kecamatan": "Woyla Timur"
+  },
+  {
+    "kode": "11.05.12",
+    "propinsi": "ACEH",
+    "kota": "KAB. ACEH BARAT",
+    "kecamatan": "Panton Reu"
+  },
+  {
+    "kode": "32.73",
+    "propinsi": "JAWA BARAT",
+    "kota": "KOTA BANDUNG",
+    "kecamatan": "Bandung"
+  }
+]

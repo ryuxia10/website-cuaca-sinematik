@@ -1,81 +1,79 @@
 import React, { useState, useEffect, useCallback } from "react";
 import "./App.css";
-// Pastikan nama file ini sesuai dengan file JSON yang sudah saya rapikan untuk Anda
-import wilayahData from "./wilayah-indonesia.json";
 
-// Aset visual tidak berubah
+// Peta aset kita sesuaikan dengan deskripsi dari Weatherstack
 const weatherAssets = {
-  Cerah: {
+  sunny: {
     video: "/videos/video-cerah.mp4",
     icon: "/icons/icon-cerah.png",
     sound: "/sounds/suara-cerah.mp3",
     color: "#FFC107",
   },
-  "Cerah Berawan": {
+  clear: {
+    video: "/videos/video-cerah.mp4",
+    icon: "/icons/icon-cerah.png",
+    sound: "/sounds/suara-cerah.mp3",
+    color: "#FFC107",
+  },
+  "partly cloudy": {
     video: "/videos/video-cerah.mp4",
     icon: "/icons/icon-berawan.png",
     sound: "/sounds/suara-cerah.mp3",
     color: "#64B5F6",
   },
-  Berawan: {
+  cloudy: {
     video: "/videos/video-berangin.mp4",
     icon: "/icons/icon-berawan.png",
     sound: null,
     color: "#B0BEC5",
   },
-  "Berawan Tebal": {
+  overcast: {
     video: "/videos/video-berangin.mp4",
     icon: "/icons/icon-berawan.png",
     sound: null,
     color: "#78909C",
   },
-  "Udara Kabur": {
-    video: "/videos/video-kabut.mp4",
-    icon: "/icons/icon-kabut.png",
-    sound: null,
-    color: "#78909C",
-  },
-  Kabut: {
-    video: "/videos/video-kabut.mp4",
-    icon: "/icons/icon-kabut.png",
-    sound: null,
-    color: "#78909C",
-  },
-  Asap: {
-    video: "/videos/video-kabut.mp4",
-    icon: "/icons/icon-kabut.png",
-    sound: null,
-    color: "#78909C",
-  },
-  "Hujan Ringan": {
+  "patchy rain possible": {
     video: "/videos/video-hujan-ringan.mp4",
     icon: "/icons/icon-hujan.png",
     sound: "/sounds/suara-hujan.mp3",
     color: "#4DD0E1",
   },
-  "Hujan Sedang": {
+  "light rain": {
     video: "/videos/video-hujan-ringan.mp4",
     icon: "/icons/icon-hujan.png",
     sound: "/sounds/suara-hujan.mp3",
     color: "#4DD0E1",
   },
-  "Hujan Lokal": {
+  "moderate rain": {
     video: "/videos/video-hujan-ringan.mp4",
     icon: "/icons/icon-hujan.png",
     sound: "/sounds/suara-hujan.mp3",
     color: "#4DD0E1",
   },
-  "Hujan Lebat": {
+  "heavy rain": {
     video: "/videos/video-hujan-badai.mp4",
-    icon: "/icons/icon-hujan-petir.png",
+    icon: "/icons/icon-hujan.png",
     sound: "/sounds/suara-badai.mp3",
     color: "#29B6F6",
   },
-  "Hujan Petir": {
+  thunderstorm: {
     video: "/videos/video-hujan-badai.mp4",
     icon: "/icons/icon-hujan-petir.png",
     sound: "/sounds/suara-badai.mp3",
     color: "#9C27B0",
+  },
+  mist: {
+    video: "/videos/video-kabut.mp4",
+    icon: "/icons/icon-kabut.png",
+    sound: null,
+    color: "#78909C",
+  },
+  fog: {
+    video: "/videos/video-kabut.mp4",
+    icon: "/icons/icon-kabut.png",
+    sound: null,
+    color: "#78909C",
   },
   Default: {
     video: "/videos/video-berangin.mp4",
@@ -88,21 +86,21 @@ const weatherAssets = {
 function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState("Bandung"); // Langsung cari Bandung saat awal
 
-  const fetchWeatherData = useCallback(async (kodeWilayah) => {
-    if (!kodeWilayah) return;
+  const fetchWeatherData = useCallback(async (kota) => {
+    if (!kota) return;
     setLoading(true);
 
-    // INI BAGIAN YANG ANDA CARI: Memanggil "kurir" di Vercel
-    const API_URL = `/api/getWeather?kode=${kodeWilayah}`;
+    // Panggilan ke "kurir" Vercel tidak berubah
+    const API_URL = `/api/getWeather?kota=${kota}`;
 
     try {
       const response = await fetch(API_URL);
-      if (!response.ok) {
-        throw new Error("Gagal mengambil data dari kurir Vercel.");
-      }
       const data = await response.json();
+      if (data.success === false || data.error) {
+        throw new Error(data.error.info || "Gagal mengambil data.");
+      }
       setWeatherData(data);
     } catch (error) {
       console.error("Error fetching weather data:", error);
@@ -113,40 +111,23 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // Kode default untuk Kota Bandung saat pertama kali memuat
-    fetchWeatherData("32.73");
-  }, [fetchWeatherData]);
+    fetchWeatherData(searchTerm);
+  }, []); // Dijalankan hanya sekali di awal
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (!searchTerm) return;
-
-    const lowerCaseSearchTerm = searchTerm.toLowerCase();
-    let foundLocation = null;
-
-    // Logika Pencarian: Cari nama kota dulu, baru kecamatan
-    foundLocation = wilayahData.find(
-      (loc) => loc.kota.toLowerCase() === lowerCaseSearchTerm
-    );
-
-    if (!foundLocation) {
-      foundLocation = wilayahData.find(
-        (loc) => loc.kecamatan.toLowerCase() === lowerCaseSearchTerm
-      );
-    }
-
-    if (foundLocation) {
-      fetchWeatherData(foundLocation.kode);
-    } else {
-      alert(`Lokasi "${searchTerm}" tidak ditemukan di dalam data.`);
-    }
+    fetchWeatherData(searchTerm);
   };
 
-  // Logika Pembacaan Data yang Aman
-  const locationInfo = weatherData?.lokasi;
-  const currentForecast = weatherData?.data?.[0]?.cuaca?.[0] || {}; // Default ke objek kosong
-  const weatherDescription = currentForecast.weather_desc || "Berawan";
-  const assets = weatherAssets[weatherDescription] || weatherAssets["Default"];
+  // Logika pembacaan data disesuaikan untuk Weatherstack
+  const locationInfo = weatherData?.location;
+  const currentForecast = weatherData?.current;
+  // weather_descriptions adalah array, kita ambil yang pertama
+  const weatherDescription =
+    currentForecast?.weather_descriptions?.[0] || "Default";
+  // Kita cari deskripsi dalam format lowercase di aset kita
+  const assets =
+    weatherAssets[weatherDescription.toLowerCase()] || weatherAssets["Default"];
 
   return (
     <div className="App">
@@ -165,13 +146,12 @@ function App() {
         </audio>
       )}
       <div className="overlay"></div>
-
       <main className="content">
         <form onSubmit={handleSearch} className="search-form">
           <input
             type="text"
             className="search-input"
-            placeholder="Ketik nama kota atau kecamatan..."
+            placeholder="Ketik nama kota..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -179,18 +159,15 @@ function App() {
             Cari
           </button>
         </form>
-
         {loading ? (
           <div className="loading-text">Memuat Kanvas Cuaca...</div>
         ) : !weatherData || !currentForecast ? (
-          <div className="loading-text">
-            Data tidak tersedia. Coba cari lokasi lain.
-          </div>
+          <div className="loading-text">Lokasi tidak ditemukan.</div>
         ) : (
           <div className="weather-content-container">
             <div className="location-info">
-              <h1>{locationInfo?.kecamatan || "Lokasi"}</h1>
-              <p>{locationInfo?.kotkab || "Tidak Ditemukan"}</p>
+              <h1>{locationInfo.name}</h1>
+              <p>{locationInfo.country}</p>
             </div>
             <div className="weather-display">
               <img
@@ -201,14 +178,16 @@ function App() {
               />
               <div className="weather-details">
                 <h2 style={{ color: assets.color }}>
-                  {currentForecast.t || "--"}°C
+                  {currentForecast.temperature}°C
                 </h2>
-                <p style={{ color: assets.color }}>{weatherDescription}</p>
+                <p style={{ color: assets.color, textTransform: "capitalize" }}>
+                  {weatherDescription}
+                </p>
               </div>
             </div>
             <div className="extra-info">
-              <p>Kelembapan: {currentForecast.hu || "--"}%</p>
-              <p>Angin: {currentForecast.ws || "--"} km/j</p>
+              <p>Kelembapan: {currentForecast.humidity}%</p>
+              <p>Angin: {currentForecast.wind_speed} km/j</p>
             </div>
           </div>
         )}

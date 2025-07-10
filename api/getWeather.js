@@ -1,25 +1,31 @@
 export default async function handler(request, response) {
-  // Mengambil 'kode' dari URL, contoh: /api/getWeather?kode=32.73
-  const { kode } = request.query;
+  // Mengambil 'kota' dari URL, contoh: /api/getWeather?kota=Bandung
+  const { kota } = request.query;
+  // Mengambil kunci API yang sudah kita perbarui di Vercel
+  const apiKey = process.env.VITE_WEATHER_API_KEY;
 
-  if (!kode) {
-    return response.status(400).json({ error: "Kode wilayah tidak ditemukan" });
+  if (!kota) {
+    return response.status(400).json({ error: "Nama kota tidak ditemukan" });
+  }
+  if (!apiKey) {
+    return response
+      .status(500)
+      .json({ error: "Kunci API tidak diatur di server" });
   }
 
-  const BMKG_API_URL = `https://api.bmkg.go.id/publik/prakiraan-cuaca?adm4=${kode}`;
+  // URL API Weatherstack (Paket gratis menggunakan HTTP)
+  const API_URL = `http://api.weatherstack.com/current?access_key=${apiKey}&query=${kota}`;
 
   try {
-    const fetchResponse = await fetch(BMKG_API_URL);
-
-    if (!fetchResponse.ok) {
-      throw new Error(
-        `Gagal mengambil data dari BMKG, status: ${fetchResponse.status}`
-      );
-    }
-
+    const fetchResponse = await fetch(API_URL);
     const data = await fetchResponse.json();
 
-    // Mengirim kembali data dari BMKG dengan sukses
+    // Weatherstack mengirimkan 'success: false' jika ada error
+    if (data.success === false) {
+      throw new Error(data.error.info);
+    }
+
+    // Mengirim kembali data dari Weatherstack dengan sukses
     return response.status(200).json(data);
   } catch (error) {
     // Mengirim pesan error jika terjadi masalah

@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef} from "react";
 import "./App.css";
 
-// Peta aset kita sesuaikan dengan deskripsi dari Weatherstack
+// Peta aset tidak berubah
 const weatherAssets = {
   sunny: {
     video: "/videos/video-cerah.mp4",
@@ -86,20 +86,30 @@ const weatherAssets = {
 function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("Bandung"); // Langsung cari Bandung saat awal
+  const [searchTerm, setSearchTerm] = useState("Bandung");
+  // --- PENAMBAHAN BARU ---
+  // ref untuk menunjuk ke elemen <audio>
+  const audioRef = useRef(null);
+  // state untuk melacak apakah pengguna sudah berinteraksi
+  const [userInteracted, setUserInteracted] = useState(false);
 
   const fetchWeatherData = useCallback(async (kota) => {
     if (!kota) return;
     setLoading(true);
 
-    // Panggilan ke "kurir" Vercel tidak berubah
-    const API_URL = `/api/getWeather?kota=${kota}`;
+    // Mengambil kunci API dari environment variable yang sudah kita buat
+    const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
+
+    // URL API Weatherstack yang akan dipanggil LANGSUNG dari browser
+    // (Paket gratis Weatherstack menggunakan http)
+    const API_URL = `http://api.weatherstack.com/current?access_key=${apiKey}&query=${kota}`;
 
     try {
       const response = await fetch(API_URL);
       const data = await response.json();
-      if (data.success === false || data.error) {
-        throw new Error(data.error.info || "Gagal mengambil data.");
+      if (data.success === false) {
+        // Jika Weatherstack memberi error (cth: kota tidak ada), tampilkan pesannya
+        throw new Error(data.error.info);
       }
       setWeatherData(data);
     } catch (error) {
@@ -111,26 +121,48 @@ function App() {
   }, []);
 
   useEffect(() => {
-    fetchWeatherData(searchTerm);
-  }, []); // Dijalankan hanya sekali di awal
+    // Otomatis mencari Bandung saat aplikasi pertama kali dimuat
+    fetchWeatherData("Bandung");
+  }, [fetchWeatherData]);
 
   const handleSearch = (e) => {
     e.preventDefault();
+    if (!userInteracted) setUserInteracted(true);
     fetchWeatherData(searchTerm);
   };
 
-  // Logika pembacaan data disesuaikan untuk Weatherstack
+  // Bagian ini tidak berubah...
   const locationInfo = weatherData?.location;
   const currentForecast = weatherData?.current;
-  // weather_descriptions adalah array, kita ambil yang pertama
   const weatherDescription =
     currentForecast?.weather_descriptions?.[0] || "Default";
-  // Kita cari deskripsi dalam format lowercase di aset kita
   const assets =
     weatherAssets[weatherDescription.toLowerCase()] || weatherAssets["Default"];
+  // --- PENAMBAHAN BARU ---
+  // useEffect ini khusus untuk mengurus audio
+  useEffect(() => {
+    // Jika ada elemen audio dan ada file suara yang harus diputar...
+    if (audioRef.current && assets.sound) {
+      // Ganti sumber suara dan muat ulang
+      audioRef.current.src = assets.sound;
+      audioRef.current.load();
+      // Jika pengguna sudah berinteraksi, coba putar suaranya
+      if (userInteracted) {
+        audioRef.current.play().catch((error) => {
+          // Menangkap error jika browser tetap memblokir, tapi biasanya tidak setelah interaksi pertama
+          console.log("Autoplay diblokir oleh browser:", error);
+        });
+      }
+    } else if (audioRef.current) {
+      // Jika tidak ada suara (misal: cuaca berawan), hentikan dan kosongkan sumber
+      audioRef.current.pause();
+      audioRef.current.src = "";
+    }
+  }, [assets.sound, userInteracted]); // Dijalankan setiap kali sumber suara atau status interaksi berubah
 
   return (
     <div className="App">
+      {/* ... seluruh JSX Anda dari <video> sampai </main> tidak berubah ... */}
       <video
         key={assets.video}
         autoPlay
@@ -140,11 +172,9 @@ function App() {
       >
         <source src={assets.video} type="video/mp4" />
       </video>
-      {assets.sound && (
-        <audio key={assets.sound} autoPlay loop>
-          <source src={assets.sound} type="audio/mpeg" />
-        </audio>
-      )}
+      {/* --- PERUBAHAN DI SINI --- */}
+      {/* Kita hapus `autoPlay` dan `key`, lalu tambahkan `ref` */}
+      <audio ref={audioRef} loop />
       <div className="overlay"></div>
       <main className="content">
         <form onSubmit={handleSearch} className="search-form">

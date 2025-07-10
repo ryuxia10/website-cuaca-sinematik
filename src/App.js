@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef} from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./App.css";
 
 // Peta aset tidak berubah
@@ -87,29 +87,25 @@ function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("Bandung");
-  // --- PENAMBAHAN BARU ---
-  // ref untuk menunjuk ke elemen <audio>
   const audioRef = useRef(null);
-  // state untuk melacak apakah pengguna sudah berinteraksi
   const [userInteracted, setUserInteracted] = useState(false);
 
+  // --- PERBAIKAN UTAMA DI SINI ---
   const fetchWeatherData = useCallback(async (kota) => {
     if (!kota) return;
     setLoading(true);
 
-    // Mengambil kunci API dari environment variable yang sudah kita buat
-    const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
-
-    // URL API Weatherstack yang akan dipanggil LANGSUNG dari browser
-    // (Paket gratis Weatherstack menggunakan http)
-    const API_URL = `http://api.weatherstack.com/current?access_key=${apiKey}&query=${kota}`;
+    // Kembali memanggil "kurir" kita di Vercel, BUKAN memanggil Weatherstack secara langsung
+    const API_URL = `/api/getWeather?kota=${kota}`;
 
     try {
       const response = await fetch(API_URL);
       const data = await response.json();
-      if (data.success === false) {
-        // Jika Weatherstack memberi error (cth: kota tidak ada), tampilkan pesannya
-        throw new Error(data.error.info);
+      // Penanganan error disesuaikan dengan respons dari kurir kita
+      if (data.success === false || data.error) {
+        throw new Error(
+          data.error.info || data.error || "Gagal mengambil data."
+        );
       }
       setWeatherData(data);
     } catch (error) {
@@ -120,10 +116,12 @@ function App() {
     }
   }, []);
 
+  // --- PERBAIKAN KECIL DI SINI ---
   useEffect(() => {
-    // Otomatis mencari Bandung saat aplikasi pertama kali dimuat
-    fetchWeatherData("Bandung");
-  }, [fetchWeatherData]);
+    // Kita tidak memuat data di awal untuk mencegah autoplay suara yang diblokir.
+    // Biarkan pengguna yang memulai dengan mencari lokasi.
+    setLoading(false);
+  }, []); // Hanya dijalankan sekali saat komponen pertama kali dimuat
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -131,38 +129,32 @@ function App() {
     fetchWeatherData(searchTerm);
   };
 
-  // Bagian ini tidak berubah...
+  // --- PERBAIKAN KECIL DI SINI ---
+  useEffect(() => {
+    // Logika audio ini sekarang dipicu setiap kali 'weatherData' berubah
+    if (audioRef.current && assets.sound) {
+      audioRef.current.src = assets.sound;
+      audioRef.current.load();
+      if (userInteracted) {
+        audioRef.current.play().catch((error) => {
+          console.log("Autoplay diblokir oleh browser:", error);
+        });
+      }
+    } else if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.src = "";
+    }
+  }, [weatherData, userInteracted, assets.sound]); // Pemicu diubah agar lebih akurat
+
   const locationInfo = weatherData?.location;
   const currentForecast = weatherData?.current;
   const weatherDescription =
     currentForecast?.weather_descriptions?.[0] || "Default";
   const assets =
     weatherAssets[weatherDescription.toLowerCase()] || weatherAssets["Default"];
-  // --- PENAMBAHAN BARU ---
-  // useEffect ini khusus untuk mengurus audio
-  useEffect(() => {
-    // Jika ada elemen audio dan ada file suara yang harus diputar...
-    if (audioRef.current && assets.sound) {
-      // Ganti sumber suara dan muat ulang
-      audioRef.current.src = assets.sound;
-      audioRef.current.load();
-      // Jika pengguna sudah berinteraksi, coba putar suaranya
-      if (userInteracted) {
-        audioRef.current.play().catch((error) => {
-          // Menangkap error jika browser tetap memblokir, tapi biasanya tidak setelah interaksi pertama
-          console.log("Autoplay diblokir oleh browser:", error);
-        });
-      }
-    } else if (audioRef.current) {
-      // Jika tidak ada suara (misal: cuaca berawan), hentikan dan kosongkan sumber
-      audioRef.current.pause();
-      audioRef.current.src = "";
-    }
-  }, [assets.sound, userInteracted]); // Dijalankan setiap kali sumber suara atau status interaksi berubah
 
   return (
     <div className="App">
-      {/* ... seluruh JSX Anda dari <video> sampai </main> tidak berubah ... */}
       <video
         key={assets.video}
         autoPlay
@@ -172,9 +164,9 @@ function App() {
       >
         <source src={assets.video} type="video/mp4" />
       </video>
-      {/* --- PERUBAHAN DI SINI --- */}
-      {/* Kita hapus `autoPlay` dan `key`, lalu tambahkan `ref` */}
+
       <audio ref={audioRef} loop />
+
       <div className="overlay"></div>
       <main className="content">
         <form onSubmit={handleSearch} className="search-form">
@@ -190,9 +182,10 @@ function App() {
           </button>
         </form>
         {loading ? (
-          <div className="loading-text">Memuat Kanvas Cuaca...</div>
-        ) : !weatherData || !currentForecast ? (
-          <div className="loading-text">Lokasi tidak ditemukan.</div>
+          <div className="loading-text">Memuat...</div>
+        ) : !weatherData ? (
+          // Pesan awal diubah agar lebih jelas
+          <div className="loading-text">Silakan cari lokasi untuk memulai.</div>
         ) : (
           <div className="weather-content-container">
             <div className="location-info">

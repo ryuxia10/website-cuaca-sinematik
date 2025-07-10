@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import "./App.css";
 
-// Peta aset tidak berubah
+// Peta aset visual Anda
 const weatherAssets = {
   sunny: {
     video: "/videos/video-cerah.mp4",
@@ -90,18 +90,16 @@ function App() {
   const audioRef = useRef(null);
   const [userInteracted, setUserInteracted] = useState(false);
 
-  // --- PERBAIKAN UTAMA DI SINI ---
   const fetchWeatherData = useCallback(async (kota) => {
     if (!kota) return;
     setLoading(true);
 
-    // Kembali memanggil "kurir" kita di Vercel, BUKAN memanggil Weatherstack secara langsung
+    // MEMANGGIL "KURIR" KITA DI VERCEL
     const API_URL = `/api/getWeather?kota=${kota}`;
 
     try {
       const response = await fetch(API_URL);
       const data = await response.json();
-      // Penanganan error disesuaikan dengan respons dari kurir kita
       if (data.success === false || data.error) {
         throw new Error(
           data.error.info || data.error || "Gagal mengambil data."
@@ -116,12 +114,10 @@ function App() {
     }
   }, []);
 
-  // --- PERBAIKAN KECIL DI SINI ---
   useEffect(() => {
-    // Kita tidak memuat data di awal untuk mencegah autoplay suara yang diblokir.
-    // Biarkan pengguna yang memulai dengan mencari lokasi.
+    // Tidak memuat data di awal, biarkan pengguna yang memulai.
     setLoading(false);
-  }, []); // Hanya dijalankan sekali saat komponen pertama kali dimuat
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -129,29 +125,33 @@ function App() {
     fetchWeatherData(searchTerm);
   };
 
-  // --- PERBAIKAN KECIL DI SINI ---
-  useEffect(() => {
-    // Logika audio ini sekarang dipicu setiap kali 'weatherData' berubah
-    if (audioRef.current && assets.sound) {
-      audioRef.current.src = assets.sound;
-      audioRef.current.load();
-      if (userInteracted) {
-        audioRef.current.play().catch((error) => {
-          console.log("Autoplay diblokir oleh browser:", error);
-        });
-      }
-    } else if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.src = "";
-    }
-  }, [weatherData, userInteracted, assets.sound]); // Pemicu diubah agar lebih akurat
-
+  // Logika untuk menentukan aset berdasarkan data cuaca
   const locationInfo = weatherData?.location;
   const currentForecast = weatherData?.current;
   const weatherDescription =
     currentForecast?.weather_descriptions?.[0] || "Default";
   const assets =
     weatherAssets[weatherDescription.toLowerCase()] || weatherAssets["Default"];
+
+  // Logika untuk mengontrol audio
+  useEffect(() => {
+    if (audioRef.current && assets.sound) {
+      if (audioRef.current.src !== window.location.origin + assets.sound) {
+        audioRef.current.src = assets.sound;
+        audioRef.current.load();
+      }
+      if (userInteracted) {
+        audioRef.current
+          .play()
+          .catch((error) =>
+            console.log("Autoplay diblokir oleh browser:", error)
+          );
+      }
+    } else if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.src = "";
+    }
+  }, [assets.sound, userInteracted]);
 
   return (
     <div className="App">
@@ -164,9 +164,7 @@ function App() {
       >
         <source src={assets.video} type="video/mp4" />
       </video>
-
       <audio ref={audioRef} loop />
-
       <div className="overlay"></div>
       <main className="content">
         <form onSubmit={handleSearch} className="search-form">
@@ -184,7 +182,6 @@ function App() {
         {loading ? (
           <div className="loading-text">Memuat...</div>
         ) : !weatherData ? (
-          // Pesan awal diubah agar lebih jelas
           <div className="loading-text">Silakan cari lokasi untuk memulai.</div>
         ) : (
           <div className="weather-content-container">

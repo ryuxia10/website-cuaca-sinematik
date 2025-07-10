@@ -1,6 +1,6 @@
 export default async function handler(request, response) {
   const { kota } = request.query;
-  // Kita akan gunakan nama variabel yang lebih sederhana di Vercel
+  // Mengambil kunci API dari Environment Variable di Vercel
   const apiKey = process.env.WEATHER_API_KEY;
 
   if (!kota) {
@@ -12,6 +12,7 @@ export default async function handler(request, response) {
       .json({ error: "Kunci API tidak diatur di server" });
   }
 
+  // URL API Weatherstack
   const API_URL = `http://api.weatherstack.com/current?access_key=${apiKey}&query=${kota}`;
 
   try {
